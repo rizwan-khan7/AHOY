@@ -18,10 +18,6 @@ namespace AHOY.WebApi.Controllers
     [ApiController]
     public class HotelController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
         private readonly ILogger<HotelController> _logger;
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
