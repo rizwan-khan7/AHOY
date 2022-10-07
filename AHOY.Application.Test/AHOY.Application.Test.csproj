@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AHOY.Application\AHOY.Application.csproj" />
-    <ProjectReference Include="..\AHOY.Infrastructure.Data\AHOY.Infrastructure.Data.csproj" />
   </ItemGroup>
 
 </Project>
