@@ -1,3 +1,4 @@
+using AHOY.Application.Features.Hotel.SearchHotel;
 using AHOY.Application.Mapper;
 using AHOY.Application.Service.Hotel.Contacts;
 using AHOY.Infrastructure.Data.Contracts;
@@ -48,6 +49,38 @@ namespace AHOY.Application.Test.Services.Hotel
             this._HotelRepository.Setup(x => x.GetHotelImages()).ReturnsAsync(lstHotelImages);
             var hotelService = new HotelService(_HotelRepository.Object, mapper);
             var result = await hotelService.GetHotelDetailsById(hotelId);
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public async Task Test_GetHotelDetails()
+        {
+            var mappingProfile = new Application.Mapper.AutoMapper();
+            var mappingConfig = new MapperConfiguration(x => { x.AddProfile(mappingProfile); });
+            var mapper = mappingConfig.CreateMapper();
+            List<Facilities> lstFacilities = new List<Facilities>();
+            lstFacilities.Add(new Facilities { FacilitiesId = 1, Description = "Free WiFi", FacilitiesName = "Free WiFi" });
+
+            List<HotelImages> lstHotelImages = new List<HotelImages>();
+            lstHotelImages.Add(new HotelImages { HotelId = 1, ImageId = 1, ImageSrc = "Images/123.jpg" });
+            List<Hotels> lstHotels = new List<Hotels>();
+            var hotelDetail = new Hotels
+            {
+                HotelId = 2,
+                Address = "Address",
+                City = "Delhi",
+                Country = "India",
+                Description = "Sample Description",
+                HotelName = "Test Hotel Name",
+                PinCode = 110025
+            };
+            lstHotels.Add(hotelDetail);
+            var filter = new GetSearchHotelQuery { City = "Delhi" };
+            this._HotelRepository.Setup(x => x.GetHotelList()).ReturnsAsync(lstHotels);
+            this._HotelRepository.Setup(x => x.GetFacilities()).ReturnsAsync(lstFacilities);
+            this._HotelRepository.Setup(x => x.GetHotelImages()).ReturnsAsync(lstHotelImages);
+            var hotelService = new HotelService(_HotelRepository.Object, mapper);
+            var result = await hotelService.GetHotelDetails(filter);
             Assert.NotNull(result);
         }
     }
